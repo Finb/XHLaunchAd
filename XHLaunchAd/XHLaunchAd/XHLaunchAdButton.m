@@ -36,7 +36,7 @@
     if (self) {
         
         _skipType = skipType;
-        CGFloat y = XH_SAFEAREAINSETS.top;
+        CGFloat y = XHLaunchAdSafeAreaInsets().top;
         self.frame = CGRectMake(XH_ScreenW-80,y, 70, 35);//方形
         switch (skipType) {
             case SkipTypeRoundTime:

@@ -20,7 +20,8 @@
 #define XH_IPHONEXSMAX    ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
 #define XH_FULLSCREEN ((XH_IPHONEX || XH_IPHONEXR || XH_IPHONEXSMAX) ? YES : NO)
 
-#define XH_SAFEAREAINSETS ((([[UIDevice currentDevice].systemVersion floatValue] >= 11) && [UIApplication sharedApplication].keyWindow.safeAreaInsets.top >= 44) ? [UIApplication sharedApplication].keyWindow.safeAreaInsets : UIEdgeInsetsMake(20, 0, 0, 0))
+/** 安全区域(兼容 iOS 13 Scene 生命周期),取不到时返回 UIEdgeInsetsMake(20, 0, 0, 0) */
+UIKIT_EXTERN UIEdgeInsets XHLaunchAdSafeAreaInsets(void);
 
 #define XHISURLString(string)  ([string hasPrefix:@"https://"] || [string hasPrefix:@"http://"]) ? YES:NO
 #define XHStringContainsSubString(string,subString)  ([string rangeOfString:subString].location == NSNotFound) ? NO:YES

@@ -206,6 +206,20 @@ static  SourceType _sourceType = SourceTypeLaunchImage;
 
 -(void)setupLaunchAd{
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    if(@available(iOS 13.0, *)){
+        /** Scene 生命周期下,windowScene 为 nil 的 UIWindow 不会被任何屏幕显示,需手动关联 */
+        UIWindowScene *firstWindowScene = nil;
+        for(UIScene *scene in [UIApplication sharedApplication].connectedScenes){
+            if(![scene isKindOfClass:[UIWindowScene class]]) continue;
+            UIWindowScene *windowScene = (UIWindowScene *)scene;
+            if(windowScene.activationState == UISceneActivationStateForegroundActive){
+                window.windowScene = windowScene;
+                break;
+            }
+            if(!firstWindowScene) firstWindowScene = windowScene;
+        }
+        if(!window.windowScene) window.windowScene = firstWindowScene;
+    }
     window.rootViewController = [XHLaunchAdController new];
     window.rootViewController.view.backgroundColor = [UIColor clearColor];
     window.rootViewController.view.userInteractionEnabled = NO;
